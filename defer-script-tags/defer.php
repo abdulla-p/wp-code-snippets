@@ -1,6 +1,17 @@
 <?php
-/** 
+/**
+ * This code snippet can be used to improve page loading time by adding neccessary attributes to the js files.
+ * 
+ * @package defer
+ */
+
+/**
  * Code Snippet: Add defer or async attributes to js script tags
+ *
+ * @param string $tag 
+ * @param array  $handle 
+ * 
+ * @return string
  */
 function add_defer_attribute( $tag, $handle ) {
 	// Add script handles to the array below.
