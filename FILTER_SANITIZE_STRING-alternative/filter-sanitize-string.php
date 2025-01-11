@@ -21,6 +21,6 @@ if ( ! function_exists( 'filter_string_polyfill' ) ) {
 }
 
 // Use case examples.
-$use = filter_input( INPUT_GET, 'use', FILTER_CALLBACK, array( 'options' => 'pip_filter_string_polyfill' ) );
-$use = filter_input( INPUT_POST, 'use', FILTER_CALLBACK, array( 'options' => 'pip_filter_string_polyfill' ) );
-$use = filter_var( $use, FILTER_CALLBACK, array( 'options' => 'pip_filter_string_polyfill' ) );
+$use = filter_input( INPUT_GET, 'use', FILTER_CALLBACK, array( 'options' => 'filter_string_polyfill' ) );
+$use = filter_input( INPUT_POST, 'use', FILTER_CALLBACK, array( 'options' => 'filter_string_polyfill' ) );
+$use = filter_var( $use, FILTER_CALLBACK, array( 'options' => 'filter_string_polyfill' ) );

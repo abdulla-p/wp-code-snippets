@@ -1,20 +1,14 @@
 <?php
 /**
- * Theme Theme Options.
+ * Theme Options.
  *
- * @package md-prime
+ * @package theme-options
  */
-
-namespace MD_PRIME\Inc;
-
-use MD_PRIME\Inc\Traits\Singleton;
 
 /**
- * Class Theme Options.
+ * Class Theme Options Initialization.
  */
 class Theme_Option {
-
-	use Singleton;
 
 	/**
 	 * Construct method.
@@ -33,9 +27,9 @@ class Theme_Option {
 		/**
 		 * Actions
 		 */
-		add_action( 'admin_menu', [ $this, 'add_option_menu' ] );
-		add_action( 'admin_init', [ $this, 'option_settings_init' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'theme_option_js' ] );
+		add_action( 'admin_menu', array( $this, 'add_option_menu' ) );
+		add_action( 'admin_init', array( $this, 'option_settings_init' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'theme_option_js' ) );
 
 	}
 
@@ -45,7 +39,7 @@ class Theme_Option {
 	 * @return void
 	 */
 	public function add_option_menu() {
-		add_menu_page( 'Theme Options', 'Theme Options', 'manage_options', 'md-prime', [ $this, 'option_form' ], '', 50 );
+		add_menu_page( 'Theme Options', 'Theme Options', 'manage_options', 'theme-option', array( $this, 'option_form' ), '', 50 );
 	}
 
 	/**
@@ -59,8 +53,8 @@ class Theme_Option {
 		<span><?php settings_errors(); ?></span>
 		<form action='options.php' enctype="multipart/form-data" method='post'> 
 			<?php
-			settings_fields( 'md-prime-setting' );
-			do_settings_sections( 'md-prime' );
+			settings_fields( 'theme-option-setting' );
+			do_settings_sections( 'theme-option' );
 			submit_button();
 			?>
 		</form> 
@@ -73,209 +67,209 @@ class Theme_Option {
 	 * @return void
 	 */
 	public function option_settings_init() {
-		register_setting( 'md-prime-setting', 'md_prime_settings' );
-		add_settings_section( 'md-prime-section', __( 'Theme Options', 'md-prime' ), [ $this, 'theme_option_description' ], 'md-prime' );
+		register_setting( 'theme-option-setting', 'theme_option_settings' );
+		add_settings_section( 'theme-option-section', __( 'Theme Options', 'theme-option' ), array( $this, 'theme_option_description' ), 'theme-option' );
 		add_settings_field(
-			'md_prime_logo',
-			__( 'Site Logo:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_logo',
+			__( 'Site Logo:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'file',
-				'name'  => 'md_prime_settings[md_prime_img]',
-				'value' => 'md_prime_img',
-			]
+				'name'  => 'theme_option_settings[theme_option_img]',
+				'value' => 'theme_option_img',
+			)
 		);
 		add_settings_field(
-			'md_prime_favicon',
-			__( 'Site Favicon:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_favicon',
+			__( 'Site Favicon:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'file',
-				'name'  => 'md_prime_settings[md_prime_favicon]',
-				'value' => 'md_prime_favicon',
-			]
+				'name'  => 'theme_option_settings[theme_option_favicon]',
+				'value' => 'theme_option_favicon',
+			)
 		);
 		add_settings_field(
-			'md_prime_tagline',
-			__( 'Site Tagline:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_tagline',
+			__( 'Site Tagline:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'text',
-				'name'  => 'md_prime_settings[md_prime_tagline]',
-				'value' => 'md_prime_tagline',
-			]
+				'name'  => 'theme_option_settings[theme_option_tagline]',
+				'value' => 'theme_option_tagline',
+			)
 		);
 		add_settings_field(
-			'md_prime_google_analytic',
-			__( 'Google Analytic:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_google_analytic',
+			__( 'Google Analytic:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'textarea',
-				'name'  => 'md_prime_settings[md_prime_google_analytic]',
-				'value' => 'md_prime_google_analytic',
-			]
+				'name'  => 'theme_option_settings[theme_option_google_analytic]',
+				'value' => 'theme_option_google_analytic',
+			)
 		);
 		add_settings_field(
-			'md_prime_css_code',
-			__( 'Additional CSS:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_css_code',
+			__( 'Additional CSS:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'textarea',
-				'name'  => 'md_prime_settings[md_prime_css_code]',
-				'value' => 'md_prime_css_code',
-			]
+				'name'  => 'theme_option_settings[theme_option_css_code]',
+				'value' => 'theme_option_css_code',
+			)
 		);
 		add_settings_field(
-			'md_prime_html_code',
-			__( 'Additional html:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_html_code',
+			__( 'Additional html:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'textarea',
-				'name'  => 'md_prime_settings[md_prime_html_code]',
-				'value' => 'md_prime_html_code',
-			]
+				'name'  => 'theme_option_settings[theme_option_html_code]',
+				'value' => 'theme_option_html_code',
+			)
 		);
 		add_settings_field(
-			'md_prime_color_picker',
-			__( 'Color:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_color_picker',
+			__( 'Color:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'color-picker',
-				'name'  => 'md_prime_settings[md_prime_color_picker]',
-				'value' => 'md_prime_color_picker',
-			]
+				'name'  => 'theme_option_settings[theme_option_color_picker]',
+				'value' => 'theme_option_color_picker',
+			)
 		);
 		add_settings_field(
-			'md_prime_select_color_picker',
-			__( 'Select Color:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_select_color_picker',
+			__( 'Select Color:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'color-picker',
-				'name'  => 'md_prime_settings[md_prime_select_color_picker]',
-				'value' => 'md_prime_select_color_picker',
-			]
+				'name'  => 'theme_option_settings[theme_option_select_color_picker]',
+				'value' => 'theme_option_select_color_picker',
+			)
 		);
 		add_settings_field(
-			'md_prime_wysiwyg',
-			__( 'Text Editor:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_wysiwyg',
+			__( 'Text Editor:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'wysiwyg',
-				'name'  => 'md_prime_settings[md_prime_wysiwyg]',
-				'value' => 'md_prime_wysiwyg',
-			]
+				'name'  => 'theme_option_settings[theme_option_wysiwyg]',
+				'value' => 'theme_option_wysiwyg',
+			)
 		);
 		add_settings_field(
-			'md_prime_password',
-			__( 'Manage Password:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_password',
+			__( 'Manage Password:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'password',
-				'name'  => 'md_prime_settings[md_prime_password]',
+				'name'  => 'theme_option_settings[theme_option_password]',
 				'id'    => 'psw',
-				'value' => 'md_prime_password',
-			]
+				'value' => 'theme_option_password',
+			)
 		);
 		add_settings_field(
-			'md_prime_selectbox',
-			__( 'Select Option:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_selectbox',
+			__( 'Select Option:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'    => 'select',
-				'name'    => 'md_prime_settings[md_prime_selectbox]',
-				'value'   => 'md_prime_selectbox',
-				'options' => [
+				'name'    => 'theme_option_settings[theme_option_selectbox]',
+				'value'   => 'theme_option_selectbox',
+				'options' => array(
 					'0' => '0',
 					'1' => '1',
 					'2' => '2',
 					'3' => '3',
-				],
-			]
+				),
+			)
 		);
 		add_settings_field(
-			'md_prime_multiselect',
-			__( 'Select Multiple Option:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_multiselect',
+			__( 'Select Multiple Option:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'    => 'multicheck',
-				'name'    => 'md_prime_settings[md_prime_multiselect]',
+				'name'    => 'theme_option_settings[theme_option_multiselect]',
 				'id'      => 'chkveg',
-				'value'   => 'md_prime_multiselect',
-				'options' => [
+				'value'   => 'theme_option_multiselect',
+				'options' => array(
 					'0' => 'pizza',
 					'1' => 'biryani',
 					'2' => 'burger',
 					'3' => 'pav bhaji',
-				],
-			]
+				),
+			)
 		);
 		add_settings_field(
-			'md_prime_radio',
-			__( 'Select Radio Option:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_radio',
+			__( 'Select Radio Option:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'    => 'radio',
-				'name'    => 'md_prime_settings[md_prime_radio]',
-				'value'   => 'md_prime_radio',
-				'options' => [
+				'name'    => 'theme_option_settings[theme_option_radio]',
+				'value'   => 'theme_option_radio',
+				'options' => array(
 					'0' => 'HTML',
 					'1' => 'CSS',
 					'2' => 'JS',
 					'3' => 'PHP',
-				],
-			]
+				),
+			)
 		);
 		add_settings_field(
-			'md_prime_checkbox',
-			__( 'Select Checkbox Option:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_checkbox',
+			__( 'Select Checkbox Option:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'checkbox',
-				'name'  => 'md_prime_settings[md_prime_checkbox]',
+				'name'  => 'theme_option_settings[theme_option_checkbox]',
 				'id'    => 'check',
-				'value' => 'md_prime_checkbox',
+				'value' => 'theme_option_checkbox',
 				'task'  => 'Enable Transparent Header ?',
-			]
+			)
 		);
 		add_settings_field(
-			'md_prime_number',
-			__( 'Number:', 'md-prime' ),
-			[ $this, 'add_field' ],
-			'md-prime',
-			'md-prime-section',
-			[
+			'theme_option_number',
+			__( 'Number:', 'theme-option' ),
+			array( $this, 'add_field' ),
+			'theme-option',
+			'theme-option-section',
+			array(
 				'type'  => 'number',
-				'name'  => 'md_prime_settings[md_prime_number]',
-				'value' => 'md_prime_number',
-			]
+				'name'  => 'theme_option_settings[theme_option_number]',
+				'value' => 'theme_option_number',
+			)
 		);
 
 	}
@@ -286,7 +280,7 @@ class Theme_Option {
 	 * @return void
 	 */
 	public function theme_option_description() {
-		echo esc_html__( 'Update Settings.', 'md-prime' );
+		echo esc_html__( 'Update Settings.', 'theme-option' );
 	}
 
 	/**
@@ -296,7 +290,7 @@ class Theme_Option {
 	 * @return void
 	 */
 	public function add_field( array $args ) {
-		$options = get_option( 'md_prime_settings' );
+		$options = get_option( 'theme_option_settings' );
 		switch ( $args['type'] ) {
 			case 'text':
 				$this->text_callback( $args, $options );
@@ -369,14 +363,16 @@ class Theme_Option {
 	 */
 	public function file_callback( $args, $options ) {
 		?>
-		<img class="md_prime_img" name="<?php echo esc_attr( $args['name'] ); ?>" src="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>" <?php
-		if ( ! empty( $options[ $args['value'] ] ) ) {
-			echo 'width="250px" height="150px"';
-		}
-		?>/>
-		<input class="md_prime_img_url" type="hidden" name="<?php echo esc_attr( $args['name'] ); ?>" size="60" value="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>">
-		<a href="#" class="md_prime_img_upload"><button>Upload</button></a>
-		<a href="#" class="md_prime_img_remove"><button>Remove</button></a>
+		<img class="theme_option_img" name="<?php echo esc_attr( $args['name'] ); ?>" src="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>" 
+			<?php
+			if ( ! empty( $options[ $args['value'] ] ) ) {
+				echo 'width="250px" height="150px"';
+			}
+			?>
+		/>
+		<input class="theme_option_img_url" type="hidden" name="<?php echo esc_attr( $args['name'] ); ?>" size="60" value="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>">
+		<a href="#" class="theme_option_img_upload"><button>Upload</button></a>
+		<a href="#" class="theme_option_img_remove"><button>Remove</button></a>
 		<?php
 	}
 
@@ -408,7 +404,12 @@ class Theme_Option {
 			<?php
 			foreach ( $multi_select_options as $key => $value ) :
 				?>
-				<option value="<?php echo esc_attr( $key ); ?>" <?php if(isset( $options[ $args['value'] ] )) { echo in_array( "$key", $options[ $args['value'] ], true ) ? 'selected' : ''; } ?>><?php echo esc_html( $value );  ?></option>
+				<option value="<?php echo esc_attr( $key ); ?>" 
+					<?php 
+					if ( isset( $options[ $args['value'] ] ) ) {
+						echo in_array( "$key", $options[ $args['value'] ], true ) ? 'selected' : ''; } 
+					?>
+				><?php echo esc_html( $value ); ?></option>
 				<?php
 				endforeach;
 			?>
@@ -440,7 +441,7 @@ class Theme_Option {
 	 */
 	public function wysiwyg_callback( $args, $options ) {
 		$content = isset( $options[ $args['value'] ] ) ? $options[ $args['value'] ] : '';
-		wp_editor( $content, 'wysiwyg', [ 'textarea_name' => esc_attr( $args['name'] ) ] );
+		wp_editor( $content, 'wysiwyg', array( 'textarea_name' => esc_attr( $args['name'] ) ) );
 	}
 
 
@@ -453,7 +454,7 @@ class Theme_Option {
 	 */
 	public function password_callback( $args, $options ) {
 		?>
-		<input pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="<?php echo esc_attr($args['id']) ?>" type="<?php echo esc_attr( $args['type'] ); ?>" name="<?php echo esc_attr( $args['name'] ); ?>" value="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>" />
+		<input pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="<?php echo esc_attr( $args['id'] ); ?>" type="<?php echo esc_attr( $args['type'] ); ?>" name="<?php echo esc_attr( $args['name'] ); ?>" value="<?php echo isset( $options[ $args['value'] ] ) ? esc_attr( $options[ $args['value'] ] ) : ''; ?>" />
 		<div id="message">
 			<h3>Password must contain the following:</h3>
 			<p id="letter" class="invalid">A <b>lowercase</b> letter</p>
@@ -497,8 +498,8 @@ class Theme_Option {
 		$radio_options = $args['options'];
 		foreach ( $radio_options as $key => $value ) :
 			?>
-			<input id="val<?php echo esc_attr( $key ) ?>" type="<?php echo esc_attr( $args['type'] ); ?>" name="<?php echo esc_attr( $args['name'] ); ?>" value="<?php echo esc_attr( $key ); ?>" <?php checked( $options[ $args['value'] ], $key ); ?>>
-			<label for="val<?php echo esc_attr( $key ) ?>"><?php echo esc_html( $value ); ?></label><br>
+			<input id="val<?php echo esc_attr( $key ); ?>" type="<?php echo esc_attr( $args['type'] ); ?>" name="<?php echo esc_attr( $args['name'] ); ?>" value="<?php echo esc_attr( $key ); ?>" <?php checked( $options[ $args['value'] ], $key ); ?>>
+			<label for="val<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $value ); ?></label><br>
 			<?php
 		endforeach;
 	}
@@ -529,7 +530,7 @@ class Theme_Option {
 			wp_enqueue_media();
 		}
 
-		wp_register_script( 'theme-option-js', MD_PRIME_BUILD_JS_URI . '/themeoption.js', [ 'jquery', 'wp-color-picker' ], filemtime( MD_PRIME_BUILD_JS_DIR_PATH . '/themeoption.js' ), true );
+		wp_register_script( 'theme-option-js', get_template_directory_uri() . '/themeoption.js', array( 'jquery', 'wp-color-picker' ), filemtime( get_template_directory_uri() . '/themeoption.js' ), true );
 		wp_enqueue_script( 'theme-option-js' );
 	}
 
